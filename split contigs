@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -c 100
+#SBATCH --mem=100G            # memory required, in units of k,M or G, up to 250G.
+#SBATCH --gres=tmp:100G       # $TMPDIR space required on each compute node, up to 400G.
+#SBATCH -t 60:00:00
+#SBATCH -p shared
+
+
+
+#First you need to split contigs into separate files
+# Input genome assembly file in FASTA format
+genome_file="/nobackup/qkdf72/apps/MitoHiFi/hifiasm_H.m_out.fa"
+
+# Set maximum number of contigs per file
+max_contigs=10
+
+# Create output directory for split files
+mkdir split_files
+
+# Split genome assembly into smaller files
+awk -v max="$max_contigs" '/^>/ {if (n%max==0){file=sprintf("split_files/split_%d.fasta",n/max+1)}; n++; print >>(file); next}; {print >>(file)}' "${genome_file}"
