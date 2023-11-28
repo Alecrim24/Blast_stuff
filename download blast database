@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Request resources:
+#SBATCH -c 64 # CPU core
+#SBATCH --mem=245G # memory required, up to 250G on standard nodes
+#SBATCH -t 72:00:00 # time limit for job (format: days-hours:minutes:seconds)
+#SBATCH --mail-user=ngbourne1@sheffield.ac.uk # Email address to sent status report
+#SBATCH --mail-type=BEGIN,END,FAIL # Types of status update to email
+
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/nt.1*
